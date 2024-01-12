@@ -11,7 +11,7 @@ dbService = DbService()
 
 @app.route('/')
 def home():
-    return "Hello World!!!"
+    return "Hello World!!! version 1.0"
 
 @app.route('/api/sgp40/create', methods=['POST'])
 def create_sgp40_table():

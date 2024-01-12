@@ -55,6 +55,6 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements-prod.txt
 
-EXPOSE 5001
-ENV FLASK_DEBUG=1
+EXPOSE 5000
+
 CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
