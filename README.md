@@ -11,3 +11,12 @@ https://medium.com/bb-tutorials-and-thoughts/how-to-run-and-deploy-python-rest-a
 
 ## How to run odbc with python
 https://learn.microsoft.com/en-us/azure/azure-sql/database/azure-sql-python-quickstart?view=azuresql&tabs=mac-linux%2Csql-auth
+
+
+## to deploy the docker to azure cloud. First build the image in azure registry.
+'''
+az acr build --image azure_data_api_server:v1 \
+  --registry cpdataapiserver \
+  --file Dockerfile .
+'''
+
