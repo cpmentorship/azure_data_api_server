@@ -83,6 +83,7 @@ class DbService:
             cursor.execute(f"INSERT INTO {self.TABLE_AIRGP40} (device_id, sample, sample_time) VALUES (?, ?, ?)", item.device_id, item.sample, item.sample_time)
             conn.commit()
         ret = item.model_dump()
+        print(f"create_air_sample {ret}")
         return ret
 
     def get_conn(self):
