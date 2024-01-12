@@ -4,6 +4,7 @@ import pyodbc
 from typing import Union
 from pydantic import BaseModel
 import datetime
+import logging
 
 print(f"pyodbc.drivers() {pyodbc.drivers()}") 
 
@@ -78,12 +79,13 @@ class DbService:
             return f"{row.ID}, {row.device_id}, {row.sample}, {row.sample_time}"
 
     def create_air_sample(self, item: AirSample):
+        logging.info(f"create_air_sample {item.model_dump()}")
         with self.get_conn() as conn:
             cursor = conn.cursor()
             cursor.execute(f"INSERT INTO {self.TABLE_AIRGP40} (device_id, sample, sample_time) VALUES (?, ?, ?)", item.device_id, item.sample, item.sample_time)
             conn.commit()
         ret = item.model_dump()
-        print(f"create_air_sample {ret}")
+        logging.info(f"added to db {ret}")
         return ret
 
     def get_conn(self):

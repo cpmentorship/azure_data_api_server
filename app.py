@@ -2,7 +2,7 @@ from flask import Flask, request
 from app_service import AppService
 import json
 from  db_service import DbService, AirSample
-
+import logging
 
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ dbService = DbService()
 
 @app.route('/')
 def home():
-    return "Hello World!!! version 1.0"
+    return "Hello World!!! version 2.1"
 
 @app.route('/api/sgp40/create', methods=['POST'])
 def create_sgp40_table():
@@ -27,6 +27,7 @@ def sgp40():
 def create_sgp40():
     request_data = request.get_json()
     sgp40 = request_data['sgp40']
+    logging.info(f"create air sampe {sgp40}")
     air_sample = AirSample(**sgp40)
     return dbService.create_air_sample(air_sample)
 
