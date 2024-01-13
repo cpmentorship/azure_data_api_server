@@ -48,11 +48,13 @@ The version number should reflect your latest version you put in the code.
 
 - Create Air Sample Table
 
-                curl --location --request POST 'https://azure-data-api-server.azurewebsites.net//api/sgp40/create'
+                curl --location --request POST 'https://azure-data-api-server.azurewebsites.net//api/sgp40/create' \
+                --header 'x-api-key: API_KEY_FOR_DEVICE'
 
 - add Air Sample into the table. (This is what sgp40 sensor is calling. )
 
                 curl --location 'https://azure-data-api-server.azurewebsites.net//api/sgp40' \
+                --header 'x-api-key: API_KEY_FOR_DEVICE' \
                 --header 'Content-Type: application/json' \
                 --data '{
                     "sgp40":{
@@ -112,3 +114,8 @@ The version number should reflect your latest version you put in the code.
     }
 ]
 ```
+
+
+## add security to flask
+
+https://blog.teclado.com/api-key-authentication-with-flask/

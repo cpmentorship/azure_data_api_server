@@ -7,6 +7,11 @@ import datetime
 import logging
 
 print(f"pyodbc.drivers() {pyodbc.drivers()}") 
+logging.basicConfig(format='%(asctime)s,%(msecs)03d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+    datefmt='%Y-%m-%d:%H:%M:%S',
+    level=logging.DEBUG)
+
+logger = logging.getLogger(__name__)
 
 class AirSample(BaseModel):
 
@@ -58,11 +63,13 @@ class DbService:
             print(e)
         return f"{self.TABLE_AIRGP40} API"
 
-    def get_air_samples(self, device_id: str):
+    def get_air_samples(self, device_id: str, start_time: datetime.datetime, end_time: datetime.datetime):
         rows = []
+        logging.debug(f"get_air_samples >> start_time {start_time}, end_time {end_time}")
+        # print(f"Type of start_time: {type(start_time)}, Type of end_time: {type(end_time)}")
         with self.get_conn() as conn:
             cursor = conn.cursor()
-            cursor.execute(f"SELECT * FROM airsgp40 WHERE device_id=N'{device_id}'")
+            cursor.execute("SELECT * FROM airsgp40 WHERE device_id= ? AND sample_time BETWEEN ? AND ?", device_id, start_time, end_time)
             rows = [dict(zip([column[0] for column in cursor.description], row)) for row in cursor.fetchall()]
             
             # for row in cursor.fetchall():
